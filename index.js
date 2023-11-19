@@ -44,6 +44,11 @@ function fizzBuzz(n) {
         }
     }
 }
+
+// let n = 15;
+// fizzBuzz(n)
+
+
 function main() {
     const n = parseInt(readLine().trim(), 10);
 
