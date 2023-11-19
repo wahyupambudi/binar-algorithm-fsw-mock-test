@@ -1,0 +1,36 @@
+{
+  "name": "binar-algorithm-fsw-mock-test",
+  "version": "1.0.0",
+  "description": "Mock Test Algoritma Basic Binar Backend Academy",
+  "main": "fizzBuzz.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wahyupambudi/binar-algorithm-fsw-mock-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wahyupambudi/binar-algorithm-fsw-mock-test/issues"
+  },
+  "homepage": "https://github.com/wahyupambudi/binar-algorithm-fsw-mock-test#readme",
+  "dependencies": {
+    "@prisma/client": "^5.5.2",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.3",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "prettier": "^3.0.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.5.2"
+  }
+}
