@@ -21,21 +21,21 @@ model users {
   email       String   @unique
   password    String 
   createdAt DateTime @db.Timestamptz  @default(now())
-  updatedAt DateTime  @default(now())
-  deletedAt DateTime?
-  todo      todos?
+  updatedAt DateTime  @db.Timestamptz @default(now())
+  deletedAt DateTime? @db.Timestamptz
+  todo      todos[]
 }
 
 model todos {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique
-  task      String
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  task        String
   description String
-  start     DateTime
-  finish    DateTime
-  status    status  @default(proses)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  deletedAt DateTime?
-  user      users     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  start       DateTime @db.Date
+  finish      DateTime @db.Date
+  status      status   @default(proses)
+  createdAt   DateTime  @db.Timestamptz @default(now())
+  updatedAt   DateTime  @db.Timestamptz @default(now())
+  deletedAt   DateTime? @db.Timestamptz
+  user        users     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }

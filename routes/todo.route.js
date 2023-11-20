@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { } = require('../controller/todo.controller')
-const { CheckPostUser } = require('../middleware/middleware')
+const { Insert } = require('../controller/todo.controller')
+const { CheckPostTodos } = require('../middleware/middleware')
 const { Authenticate } = require("../middleware/restrict");
 
 
@@ -112,7 +112,7 @@ const { Authenticate } = require("../middleware/restrict");
  *       201:
  *         description: User created successfully
  */
-// router.post('/', CheckPostUser, Authenticate, Insert)
+router.post('/', CheckPostTodos, Authenticate, Insert)
 
 
 // Update User
