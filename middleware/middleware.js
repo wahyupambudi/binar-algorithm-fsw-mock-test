@@ -1,5 +1,5 @@
 const { ResponseTemplate } = require("../helper/template.helper");
-const Joi = require("joi");
+const Joi = require('joi').extend(require('@joi/date'));
 
 function CheckPostUser(req, res, next) {
   const schema = Joi.object({
@@ -27,12 +27,14 @@ function CheckPostUser(req, res, next) {
   next();
 }
 
-function CheckPostAccount(req, res, next) {
+function CheckPostTodos(req, res, next) {
   const schema = Joi.object({
-    bank_name: Joi.string().alphanum().max(255).required(),
+    task: Joi.string().regex(/^[a-zA-Z0-9, ]*$/, 'Alphanumerics, space and comma characters').max(255).required(),
+    description: Joi.string().regex(/^[a-zA-Z0-9, ]*$/, 'Alphanumerics, space and comma characters').max(255).required(),
     userId: Joi.number().required(),
-    bank_account_number: Joi.number().required(),
-    balance: Joi.number().required(),
+    start: Joi.date().utc(),
+    finish: Joi.date().utc(),
+    status: Joi.string().alphanum().max(255).required(),
   });
 
   const { error } = schema.validate(req.body);
@@ -91,7 +93,7 @@ function CheckPostDeposit(req, res, next) {
 
 module.exports = {
   CheckPostUser,
-  CheckPostAccount,
+  CheckPostTodos,
   CheckPostTransaction,
   CheckPostDeposit
 };
