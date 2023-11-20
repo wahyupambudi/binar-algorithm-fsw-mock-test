@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { Insert } = require('../controller/todo.controller')
+const { Get, Insert } = require('../controller/todo.controller')
 const { CheckPostTodos } = require('../middleware/middleware')
-const { Authenticate } = require("../middleware/restrict");
+const { Authenticate, restrictPostTodos } = require("../middleware/restrict");
 
 
 // Get User
@@ -32,7 +32,7 @@ const { Authenticate } = require("../middleware/restrict");
  *                   email:
  *                      type: string
  */
-// router.get('/', Authenticate, Get)
+router.get('/', Authenticate, Get)
 
 
 // Get User By Id
@@ -112,7 +112,7 @@ const { Authenticate } = require("../middleware/restrict");
  *       201:
  *         description: User created successfully
  */
-router.post('/', CheckPostTodos, Authenticate, Insert)
+router.post('/', CheckPostTodos, Authenticate, restrictPostTodos, Insert)
 
 
 // Update User

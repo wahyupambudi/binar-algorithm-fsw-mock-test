@@ -13,9 +13,6 @@ async function Authenticate(req, res, next) {
     try {
         const user = await jwt.verify(authorization, process.env.SECRET_KEY);
         req.user = user;
-        // console.log(user)
-        // console.log(req.user)
-
         next();
     } catch (error) {
         let respons = ResponseTemplate(null, "user unauthorized", error, 400);
@@ -24,93 +21,27 @@ async function Authenticate(req, res, next) {
     }
 }
 
-async function restrictUser(req, res, next) {
-    const { authorization } = req.headers;
-    const { email } = req.params;
-
-    try {
-        const user = await jwt.verify(authorization, process.env.SECRET_KEY);
-        const emailFromToken = user.email;
-        const emailFromRequest = req.params.email;
-
-        if (emailFromToken !== emailFromRequest) {
-            let respons = ResponseTemplate(
-                null,
-                "Forbidden: Access denied",
-                error,
-                400,
-            );
-            return res.status(400).json(respons); 
-            // console.log(req.params.email);
-        }
-        next();
-    } catch (error) {
-        let respons = ResponseTemplate(
-            null,
-            "Forbidden: Access denied",
-            error,
-            400,
-        );
-        res.status(400).json(respons);
-        return;
-    }
-}
-
-async function restrictUserTrx(req, res, next) {
+async function restrictPostTodos(req, res, next) {
     const { authorization } = req.headers;
     const { email } = req.params;
 
     try {
         const user = await jwt.verify(authorization, process.env.SECRET_KEY);
         const idFromToken = user.id;
-        const idFromRequest = Number(req.params.id);
+        const idFromBody = Number(req.body.userId);
 
         // console.log(idFromToken)
-        // console.log(idFromRequest)
+        // console.log(idFromBody)
 
-        if (idFromToken !== idFromRequest) {
+        if (idFromToken !== idFromBody) {
             let respons = ResponseTemplate(
                 null,
                 "Forbidden: Access denied",
                 error,
                 400,
             );
-            return res.status(400).json(respons); 
+            return res.status(400).json(respons);
             // console.log(req.params.email);
-        }
-        next();
-    } catch (error) {
-        let respons = ResponseTemplate(
-            null,
-            "Forbidden: Access denied",
-            error,
-            400,
-        );
-        res.status(400).json(respons);
-        return;
-    }
-}
-
-async function restrictGetUser(req, res, next) {
-    const { authorization } = req.headers;
-    const { email } = req.params;
-
-    try {
-        const user = await jwt.verify(authorization, process.env.SECRET_KEY);
-        const idFromToken = user.id;
-        const userIdFromRequest = Number(req.params.userId);
-
-        // console.log(idFromToken)
-        // console.log(userIdFromRequest)
-
-        if (idFromToken !== userIdFromRequest) {
-            let respons = ResponseTemplate(
-                null,
-                "Forbidden: Access denied",
-                error,
-                400,
-            );
-            return res.status(400).json(respons); 
         }
         next();
     } catch (error) {
@@ -127,7 +58,5 @@ async function restrictGetUser(req, res, next) {
 
 module.exports = {
     Authenticate,
-    restrictUser,
-    restrictUserTrx,
-    restrictGetUser
+    restrictPostTodos,
 };
