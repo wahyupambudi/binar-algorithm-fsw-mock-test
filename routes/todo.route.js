@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Get, Insert, GetByPK, Update, Delete } = require('../controller/user.controller')
+const { } = require('../controller/todo.controller')
 const { CheckPostUser } = require('../middleware/middleware')
 const { Authenticate } = require("../middleware/restrict");
 
@@ -32,7 +32,7 @@ const { Authenticate } = require("../middleware/restrict");
  *                   email:
  *                      type: string
  */
-router.get('/', Authenticate, Get)
+// router.get('/', Authenticate, Get)
 
 
 // Get User By Id
@@ -76,7 +76,7 @@ router.get('/', Authenticate, Get)
  *                   identity_number:
  *                      type: number
  */
-router.get('/:userId', Authenticate, GetByPK)
+// router.get('/:userId', Authenticate, GetByPK)
 
 
 // Post User
@@ -112,7 +112,7 @@ router.get('/:userId', Authenticate, GetByPK)
  *       201:
  *         description: User created successfully
  */
-router.post('/', CheckPostUser, Authenticate, Insert)
+// router.post('/', CheckPostUser, Authenticate, Insert)
 
 
 // Update User
@@ -148,7 +148,7 @@ router.post('/', CheckPostUser, Authenticate, Insert)
  *       200:
  *         description: User updated successfully
  */
-router.put('/:userId', Authenticate, Update)
+// router.put('/:userId', Authenticate, Update)
 
 // Delete
 /**
@@ -170,6 +170,6 @@ router.put('/:userId', Authenticate, Update)
  *       204:
  *         description: User deleted successfully
  */
-router.delete('/:userId', Authenticate, Delete)
+// router.delete('/:userId', Authenticate, Delete)
 
 module.exports = router
