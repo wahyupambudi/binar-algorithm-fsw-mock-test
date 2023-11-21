@@ -10,16 +10,11 @@ async function Get(req, res) {
   // get id user from jwt
   const { authorization } = req.headers;
   const users = await jwt.verify(authorization, process.env.SECRET_KEY);
-  // console.log(users.id);
 
   // const payload = {};
 
   // if (userId) {
   //   payload.userId = parseInt(users.id);
-  // }
-
-  // if (task) {
-  //   payload.task = task;
   // }
 
   try {
@@ -30,8 +25,10 @@ async function Get(req, res) {
       skip,
       take: perPage,
       where: {
-        userId: parseInt(users.id)
-      } ,
+        id: parseInt(id),
+        userId: parseInt(users.id),
+        task: task,
+      },
       select: {
         id: true,
         userId: true,
@@ -42,6 +39,16 @@ async function Get(req, res) {
         status: true,
       },
     });
+
+    if (todos[0] === undefined) {
+      let respons = ResponseTemplate(
+        null,
+        "Forbidden: Access denied",
+        null,
+        400,
+      );
+      return res.status(400).json(respons);
+    }
 
     let resp = ResponseTemplate(todos, "success", null, 200);
     res.json(resp);
