@@ -35,6 +35,9 @@ const swaggerOptions = {
       {
         url: "http://localhost:3000",
       },
+      {
+        url: "https://binar-algorithm-fsw-mock-test-production.up.railway.app"
+      },
     ],
   },
   apis: [
