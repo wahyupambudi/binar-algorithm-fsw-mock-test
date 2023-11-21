@@ -112,7 +112,7 @@ router.get('/', Authenticate, Get)
  *       201:
  *         description: User created successfully
  */
-router.post('/', CheckPostTodos, Authenticate, restrictPostTodos, Insert)
+router.post('/', CheckPostTodos, Authenticate, Insert)
 
 
 // Update User

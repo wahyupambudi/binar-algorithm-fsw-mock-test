@@ -1,4 +1,5 @@
 const { ResponseTemplate } = require("../helper/template.helper");
+const { getUserFromToken } = require("../helper/jwt.helper");
 const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 
@@ -8,8 +9,7 @@ async function Get(req, res) {
   const { id, userId, task, description, start, finish, status } = req.query;
 
   // get id user from jwt
-  const { authorization } = req.headers;
-  const users = await jwt.verify(authorization, process.env.SECRET_KEY);
+  const users = await getUserFromToken(req.headers, process.env.SECRET_KEY);
 
   // const payload = {};
 
@@ -25,7 +25,6 @@ async function Get(req, res) {
       skip,
       take: perPage,
       where: {
-        id: parseInt(id),
         userId: parseInt(users.id),
         task: task,
       },
@@ -64,8 +63,11 @@ async function Get(req, res) {
 async function Insert(req, res) {
   const { userId, task, description, start, finish, status } = req.body;
 
+  // get id user from jwt
+  const users = await getUserFromToken(req.headers, process.env.SECRET_KEY);
+
   const payload = {
-    userId: parseInt(userId),
+    userId: parseInt(users.id),
     task,
     description,
     start,
@@ -83,6 +85,19 @@ async function Insert(req, res) {
   } catch (error) {
     console.log(error);
     let resp = ResponseTemplate(null, "internal server error", null, 500);
+    res.json(resp);
+    return;
+  }
+}
+
+async function Update(req, res) {
+  const { userId, task, description, start, finish, status } = req.body;
+  const { id } = req.params;
+
+  const payload = {};
+
+  if (!userId && !task && !description && !start && !finish && !status) {
+    let resp = ResponseTemplate(null, "bad request", null, 400);
     res.json(resp);
     return;
   }
