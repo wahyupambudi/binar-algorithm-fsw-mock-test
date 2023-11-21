@@ -12,9 +12,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "Implementation Swagger to Backend Challenge 5",
+      title: "Swagger Binar Backend Mock Test",
       version: "1.0.0",
-      description: "API MyBank for Users, Accounts, Transactions",
+      description: "Implementation Backend For API Todolist",
     },
     components: {
       securitySchemes: {
@@ -39,9 +39,7 @@ const swaggerOptions = {
   },
   apis: [
     "./routes/auth.route.js",
-    "./routes/user.route.js",
-    "./routes/account.route.js",
-    "./routes/transaction.route.js",
+    "./routes/todo.route.js",
   ],
 };
 

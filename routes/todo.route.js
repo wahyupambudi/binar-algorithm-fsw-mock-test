@@ -5,19 +5,19 @@ const { CheckPostTodos } = require('../middleware/middleware')
 const { Authenticate, restrictPostTodos } = require("../middleware/restrict");
 
 
-// Get User
+// Get Todolist
 /**
  * @swagger
- * /api/v1/users:
+ * /api/v1/todo:
  *   get:
  *     tags:
- *      - "CRUD User"
- *     summary: Get all Users
+ *      - "CRUD Todolist"
+ *     summary: Get all Todolist
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: A list of Users
+ *         description: A list of Todolist
  *         content:
  *           application/json:
  *             schema:
@@ -27,66 +27,30 @@ const { Authenticate, restrictPostTodos } = require("../middleware/restrict");
  *                 properties:
  *                   id:
  *                     type: integer
- *                   name:
- *                     type: string
- *                   email:
+ *                   userId:
+ *                     type: integer
+ *                   task:
+ *                      type: string
+ *                   description:
+ *                      type: string
+ *                   start:
+ *                      type: string
+ *                   finish:
+ *                      type: string
+ *                   status:
  *                      type: string
  */
 router.get('/', Authenticate, Get)
 
 
-// Get User By Id
+// Post Todolist
 /**
  * @swagger
- * /api/v1/users/{id}:
- *   get:
- *     tags:
- *      - "CRUD User"
- *     summary: Get all By Id
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: A list of Users By Id
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name:
- *                     type: string
- *                   email:
- *                      type: string
- *                   password:
- *                      type: string
- *                   identity_type:
- *                      type: string
- *                   address:
- *                      type: string
- *                   identity_number:
- *                      type: number
- */
-// router.get('/:userId', Authenticate, GetByPK)
-
-
-// Post User
-/**
- * @swagger
- * /api/v1/users:
+ * /api/v1/todo:
  *   post:
  *     tags:
- *      - "CRUD User"
- *     summary: Create a new User
+ *      - "CRUD Todolist"
+ *     summary: Create a new Todolist
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -96,33 +60,33 @@ router.get('/', Authenticate, Get)
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               task:
  *                 type: string
- *               email:
+ *               description:
  *                 type: string
- *               password:
+ *               start:
  *                 type: string
- *               identity_type:
+ *                 format: date-time
+ *               finish:
  *                 type: string
- *               address:
+ *                 format: date-time
+ *               status:
  *                 type: string
- *               identity_number:
- *                 type: number
  *     responses:
  *       201:
- *         description: User created successfully
+ *         description: Todolist created successfully
  */
 router.post('/', CheckPostTodos, Authenticate, Insert)
 
 
-// Update User
+// Update Todolist
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/todo/{id}:
  *   put:
  *     tags:
- *      - "CRUD User"
- *     summary: Update an User by ID
+ *      - "CRUD Todolist"
+ *     summary: Update an Todolist by ID
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -138,26 +102,32 @@ router.post('/', CheckPostTodos, Authenticate, Insert)
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               task:
  *                 type: string
- *               email:
+ *               description:
  *                 type: string
- *               password:
+ *               start:
+ *                 type: string
+ *                 format: date-time
+ *               finish:
+ *                 type: string
+ *                 format: date-time
+ *               status:
  *                 type: string
  *     responses:
  *       200:
- *         description: User updated successfully
+ *         description: Todolist updated successfully
  */
 router.put('/:id', Authenticate, Update)
 
 // Delete
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/todo/{id}:
  *   delete:
  *     tags:
- *      - "CRUD User"
- *     summary: Delete an User by ID
+ *      - "CRUD Todolist"
+ *     summary: Delete an Todolist by ID
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -168,7 +138,7 @@ router.put('/:id', Authenticate, Update)
  *           type: integer
  *     responses:
  *       204:
- *         description: User deleted successfully
+ *         description: Todolist deleted successfully
  */
 router.delete('/:id', Authenticate, Delete)
 
