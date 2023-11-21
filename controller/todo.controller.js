@@ -77,6 +77,7 @@ async function Insert(req, res) {
 async function Update(req, res) {
   const { userId, task, description, start, finish, status } = req.body;
   const { id } = req.params;
+  const updatedAt = new Date();
 
   const todo = await prisma.todos.findUnique({
     where: {
@@ -128,6 +129,9 @@ async function Update(req, res) {
   }
   if (status) {
     payload.status = status;
+  }
+  if (updatedAt) {
+    payload.updatedAt = updatedAt;
   }
 
   try {
