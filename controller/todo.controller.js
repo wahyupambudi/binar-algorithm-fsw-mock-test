@@ -78,10 +78,31 @@ async function Update(req, res) {
   const { userId, task, description, start, finish, status } = req.body;
   const { id } = req.params;
 
-  const payload = {};
+  const todo = await prisma.todos.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
 
-  // get id user from jwt
+  if (todo === null) {
+    let resp = ResponseTemplate(null, "Todo is Not Found", null, 404);
+    res.json(resp);
+    return;
+  }
+
+  // simpan id user dari data yang di dapatkan
+  const userIdFromtodo = parseInt(todo.userId);
+  // dapatkan id user dari token
   const users = await getUserFromToken(req.headers, process.env.SECRET_KEY);
+  const userIdFromToken = parseInt(users.id);
+
+  if (userIdFromtodo !== userIdFromToken) {
+    let resp = ResponseTemplate(null, "Forbidden: Access denied", null, 400);
+    res.json(resp);
+    return;
+  }
+
+  const payload = {};
 
   if (!userId && !task && !description && !start && !finish && !status) {
     let resp = ResponseTemplate(null, "bad request", null, 400);
@@ -115,6 +136,8 @@ async function Update(req, res) {
         id: parseInt(id),
       },
       data: payload,
+      // userId: parseInt(users.id),
+      // userId: userIdFromToken
     });
 
     let resp = ResponseTemplate(todos, "success", null, 200);
@@ -159,7 +182,7 @@ async function Delete(req, res) {
     const todos = await prisma.todos.delete({
       where: {
         id: parseInt(id),
-        userId: parseInt(users.id),
+        userId: userIdFromToken,
       },
     });
 

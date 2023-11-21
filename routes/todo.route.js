@@ -148,7 +148,7 @@ router.post('/', CheckPostTodos, Authenticate, Insert)
  *       200:
  *         description: User updated successfully
  */
-router.put('/:id', Authenticate, restrictPostTodos, Update)
+router.put('/:id', Authenticate, Update)
 
 // Delete
 /**
