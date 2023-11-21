@@ -11,12 +11,6 @@ async function Get(req, res) {
   // get id user from jwt
   const users = await getUserFromToken(req.headers, process.env.SECRET_KEY);
 
-  // const payload = {};
-
-  // if (userId) {
-  //   payload.userId = parseInt(users.id);
-  // }
-
   try {
     const page = parseInt(req.query.page) || 1; // total halaman
     const perPage = parseInt(req.query.perPage) || 10; // total item per halaman
@@ -38,16 +32,6 @@ async function Get(req, res) {
         status: true,
       },
     });
-
-    if (todos[0] === undefined) {
-      let respons = ResponseTemplate(
-        null,
-        "Forbidden: Access denied",
-        null,
-        400,
-      );
-      return res.status(400).json(respons);
-    }
 
     let resp = ResponseTemplate(todos, "success", null, 200);
     res.json(resp);
@@ -96,11 +80,98 @@ async function Update(req, res) {
 
   const payload = {};
 
+  // get id user from jwt
+  const users = await getUserFromToken(req.headers, process.env.SECRET_KEY);
+
   if (!userId && !task && !description && !start && !finish && !status) {
     let resp = ResponseTemplate(null, "bad request", null, 400);
     res.json(resp);
     return;
   }
+
+  if (userId) {
+    payload.userId = parseInt(users.id);
+  }
+
+  if (task) {
+    payload.task = task;
+  }
+  if (description) {
+    payload.description = description;
+  }
+  if (start) {
+    payload.start = start;
+  }
+  if (finish) {
+    payload.finish = finish;
+  }
+  if (status) {
+    payload.status = status;
+  }
+
+  try {
+    const todos = await prisma.todos.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: payload,
+    });
+
+    let resp = ResponseTemplate(todos, "success", null, 200);
+    res.json(resp);
+    return;
+  } catch (error) {
+    console.log(error);
+    let resp = ResponseTemplate(null, "internal server error", error, 500);
+    res.json(resp);
+    return;
+  }
 }
 
-module.exports = { Get, Insert };
+async function Delete(req, res) {
+  const { id } = req.params;
+
+  const todo = await prisma.todos.findUnique({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  if (todo === null) {
+    let resp = ResponseTemplate(null, "Todo is Not Found", null, 404);
+    res.json(resp);
+    return;
+  }
+
+  // simpan id user dari data yang di dapatkan
+  const userIdFromtodo = parseInt(todo.userId);
+  // dapatkan id user dari token
+  const users = await getUserFromToken(req.headers, process.env.SECRET_KEY);
+  const userIdFromToken = parseInt(users.id);
+
+  if (userIdFromtodo !== userIdFromToken) {
+    let resp = ResponseTemplate(null, "Forbidden: Access denied", null, 400);
+    res.json(resp);
+    return;
+  }
+
+  try {
+    const todos = await prisma.todos.delete({
+      where: {
+        id: parseInt(id),
+        userId: parseInt(users.id),
+      },
+    });
+
+    let resp = ResponseTemplate(todos, "success", null, 200);
+    res.json(resp);
+    return;
+  } catch (error) {
+    // console.log(error);
+    let resp = ResponseTemplate(null, "internal server error", error, 500);
+    res.json(resp);
+    return;
+  }
+}
+
+module.exports = { Get, Insert, Update, Delete };

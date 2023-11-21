@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Get, Insert } = require('../controller/todo.controller')
+const { Get, Insert, Update, Delete } = require('../controller/todo.controller')
 const { CheckPostTodos } = require('../middleware/middleware')
 const { Authenticate, restrictPostTodos } = require("../middleware/restrict");
 
@@ -148,7 +148,7 @@ router.post('/', CheckPostTodos, Authenticate, Insert)
  *       200:
  *         description: User updated successfully
  */
-// router.put('/:userId', Authenticate, Update)
+router.put('/:id', Authenticate, restrictPostTodos, Update)
 
 // Delete
 /**
@@ -170,6 +170,6 @@ router.post('/', CheckPostTodos, Authenticate, Insert)
  *       204:
  *         description: User deleted successfully
  */
-// router.delete('/:userId', Authenticate, Delete)
+router.delete('/:id', Authenticate, Delete)
 
 module.exports = router
