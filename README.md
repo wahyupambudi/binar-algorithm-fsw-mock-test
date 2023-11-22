@@ -1,4 +1,10 @@
-# binar-algorithm-mock-test
+# BINAR ALGORITHM BACKEND MOCK TEST
+
+## Algorithm Test 
+Algorithm Mock tes on Folde `algorithm-test`
+
+## Project Todolist API
+
 This is my project Backend API Todolist with tech stack `nodeJs, ExpressJs, Postgres`
 
 The module nodejs used are in `package.json` file.
