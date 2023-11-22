@@ -1,7 +1,7 @@
 # BINAR ALGORITHM BACKEND MOCK TEST
 
 ## Algorithm Test 
-Algorithm Mock tes on Folde `algorithm-test`
+Algorithm Mock tes on Folder `algorithm-test`
 
 ## Project Todolist API
 
