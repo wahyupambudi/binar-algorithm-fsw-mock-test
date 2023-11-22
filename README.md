@@ -173,4 +173,20 @@ Host: binar-algorithm-fsw-mock-test-production.up.railway.app
 
 ![App Screenshot](screenshot/Screenshot_10.png)
 
+### SOAL
+Apakah Kegunaan JSON pada REST API?
+```
+JSON digunakan sebagai format pertukaran data standar di REST API. Ketika klien mengirimkan permintaan HTTP kepada server atau ketika server mengirimkan respons, data seringkali diwakili dalam format JSON. Ini membuat proses pertukaran data antara klien dan server lebih efisien dan konsisten.
+```
 
+Jelaskan bagaimana REST API bekerja
+```
+RESTful API bekerja dengan cara memanipulasi resource dan representasi. Representasi ini saling dipertukarkan di antara pengguna dan server melalui antarmuka terstandar dan protokol komunikasi tertentu, biasanya HTTP.
+
+    REST API menggunakan metode HTTP (GET, POST, PUT, DELETE) untuk berinteraksi dengan sumber daya.
+    Metode HTTP memberikan operasi umum yang dapat diaplikasikan pada sumber daya:
+        GET: Mendapatkan data dari sumber daya.
+        POST: Membuat sumber daya baru.
+        PUT atau PATCH: Memperbarui sumber daya yang sudah ada.
+        DELETE: Menghapus sumber daya.
+```
