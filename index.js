@@ -55,7 +55,7 @@ app.use("/", router);
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("This My Service REST API todolist!");
 });
 
 app.listen(port, () => {
