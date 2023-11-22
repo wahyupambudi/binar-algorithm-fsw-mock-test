@@ -11,6 +11,11 @@ The module nodejs used are in `package.json` file.
 
 `index.js` used to run the service
 
+## ERD
+
+![App Screenshot](erd-backend-todolist.png)
+
+
 ## Install module nodejs
 
     npm install
