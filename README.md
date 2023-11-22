@@ -83,6 +83,18 @@ Host: binar-algorithm-fsw-mock-test-production.up.railway.app
 
 ![App Screenshot](screenshot/Screenshot_3.png)
 
+## Auth - Logout
+
+### Request
+
+``` 
+POST /api/v1/auth/logout HTTP/1.1
+Authorization: yourAuthorization (token from jwt)
+Host: binar-algorithm-fsw-mock-test-production.up.railway.app
+```
+
+![App Screenshot](screenshot/logout.png)
+
 ## Todolist - Get
 
 ### Request
@@ -172,6 +184,10 @@ Host: binar-algorithm-fsw-mock-test-production.up.railway.app
 ## Todolist - Update (todolist on another user)
 
 ![App Screenshot](screenshot/Screenshot_10.png)
+
+## Auth - Whoami (after logout with same token)
+
+![App Screenshot](screenshot/after-logout.png)
 
 ### SOAL
 Apakah Kegunaan JSON pada REST API?
