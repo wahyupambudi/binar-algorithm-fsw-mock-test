@@ -1,5 +1,6 @@
 const { ResponseTemplate } = require("../helper/template.helper");
 const jwt = require("jsonwebtoken");
+const allListTokens = require('../controller/auth.controller').listTokens;
 
 async function Authenticate(req, res, next) {
     const { authorization } = req.headers;
@@ -56,7 +57,20 @@ async function restrictPostTodos(req, res, next) {
     }
 }
 
+function checkTokenBlacklist(req, res, next) {
+  const token = req.headers.authorization;
+  // console.log(`ini token ${token}`)
+  // console.log(`ini list token ${allListTokens}`)
+
+  if (token && allListTokens.includes(token)) {
+    return res.status(401).json({ message: 'Unauthorized. Token has been revoked.' });
+  }
+
+  next();
+}
+
 module.exports = {
     Authenticate,
     restrictPostTodos,
+    checkTokenBlacklist
 };

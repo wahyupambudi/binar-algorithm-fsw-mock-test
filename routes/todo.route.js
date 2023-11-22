@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Get, Insert, Update, Delete } = require('../controller/todo.controller')
 const { CheckPostTodos } = require('../middleware/middleware')
-const { Authenticate, restrictPostTodos } = require("../middleware/restrict");
+const { Authenticate, checkTokenBlacklist,  restrictPostTodos } = require("../middleware/restrict");
 
 
 // Get Todolist
@@ -40,7 +40,7 @@ const { Authenticate, restrictPostTodos } = require("../middleware/restrict");
  *                   status:
  *                      type: string
  */
-router.get('/', Authenticate, Get)
+router.get('/', Authenticate, checkTokenBlacklist,  Get)
 
 
 // Post Todolist
@@ -76,7 +76,7 @@ router.get('/', Authenticate, Get)
  *       201:
  *         description: Todolist created successfully
  */
-router.post('/', CheckPostTodos, Authenticate, Insert)
+router.post('/', CheckPostTodos, Authenticate, checkTokenBlacklist,  Insert)
 
 
 // Update Todolist
@@ -118,7 +118,7 @@ router.post('/', CheckPostTodos, Authenticate, Insert)
  *       200:
  *         description: Todolist updated successfully
  */
-router.put('/:id', Authenticate, Update)
+router.put('/:id', Authenticate, checkTokenBlacklist,  Update)
 
 // Delete
 /**
@@ -140,6 +140,6 @@ router.put('/:id', Authenticate, Update)
  *       204:
  *         description: Todolist deleted successfully
  */
-router.delete('/:id', Authenticate, Delete)
+router.delete('/:id', Authenticate, checkTokenBlacklist,  Delete)
 
 module.exports = router

@@ -5,6 +5,9 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 require("dotenv").config();
 
+const listTokens = [];
+
+
 async function Register(req, res, next) {
     const { name, email, password } = req.body;
 
@@ -84,7 +87,10 @@ async function Login(req, res, next) {
             return;
         }
 
-        let token = jwt.sign({id: user.id, name: user.name, email: user.email}, process.env.SECRET_KEY);
+        let token = jwt.sign(
+            { id: user.id, name: user.name, email: user.email },
+            process.env.SECRET_KEY,
+        );
         // console.log(user)
 
         let respons = ResponseTemplate({ token }, "success", null, 200);
@@ -96,8 +102,22 @@ async function Login(req, res, next) {
 }
 
 function whoami(req, res) {
+    // console.log(`listTokens dari whoami ${listTokens}`)
     let respons = ResponseTemplate({ user: req.user }, "success", null, 200);
     res.status(200).json(respons);
+    return;
+}
+
+function logout(req, res) {    
+    const token = req.headers.authorization;
+    if (token) {
+        listTokens.push(token);
+        res.status(200).json({ message: "Logout successful" });
+    } else {
+        res.status(400).json({ message: "Token not provided" });
+    }
+    // console.log(listTokens)
+
     return;
 }
 
@@ -105,4 +125,6 @@ module.exports = {
     Register,
     Login,
     whoami,
+    logout,
+    listTokens
 };
