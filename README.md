@@ -26,7 +26,7 @@ The module nodejs used are in `package.json` file.
 
 ## Run the app
 
-    npm run dev
+    npm run start
 
 # REST API
 
